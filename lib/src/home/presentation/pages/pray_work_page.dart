@@ -21,17 +21,13 @@ class _PrayDayWorkPageState extends State<PrayDayWorkPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xfffcf9f4),
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        titleSpacing: 0,
         title: Text(
           widget.prayWork.title,
-          textAlign: TextAlign.center,
-          style: getTextTheme(
-            context,
-            20,
-          )?.copyWith(color: Colors.white, fontFamily: 'hafs'),
+          style: theme.textTheme.headlineSmall?.copyWith(fontFamily: 'hafs'),
         ),
         actions: [
           IconButton(
@@ -40,10 +36,7 @@ class _PrayDayWorkPageState extends State<PrayDayWorkPage> {
                 isShowFontSize = !isShowFontSize;
               });
             },
-            icon: const Icon(
-              CupertinoIcons.textformat_size,
-              color: Colors.white,
-            ),
+            icon: const Icon(CupertinoIcons.textformat_size),
           ),
         ],
       ),
@@ -58,10 +51,10 @@ class _PrayDayWorkPageState extends State<PrayDayWorkPage> {
               child: Text(
                 widget.prayWork.description,
                 textAlign: TextAlign.justify,
-                style: getTextTheme(
-                  context,
-                  fontSize.toInt(),
-                )?.copyWith(height: 2, fontFamily: 'hafs', color: Colors.black),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontFamily: 'hafs',
+                  fontSize: fontSize,
+                ),
               ),
             ),
           ),

@@ -35,6 +35,7 @@ class _SurahPageState extends State<SurahPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     var keysList = combinedTextMap.keys.toList();
     if (widget.pageOfAyah != null) {
       var index = keysList.indexOf(widget.pageOfAyah!);
@@ -49,16 +50,12 @@ class _SurahPageState extends State<SurahPage> {
       );
     }
     return Scaffold(
-      backgroundColor: const Color(0xfffcf9f4),
       appBar: AppBar(
         titleSpacing: 0,
         title: Text(
           widget.surah.name,
           textAlign: TextAlign.center,
-          style: getTextTheme(
-            context,
-            24,
-          )?.copyWith(fontFamily: 'hafs2', color: Colors.white),
+          style: theme.textTheme.headlineSmall?.copyWith(fontFamily: 'hafs'),
         ),
         actions: [
           IconButton(
@@ -67,10 +64,7 @@ class _SurahPageState extends State<SurahPage> {
                 isShowFontSize = !isShowFontSize;
               });
             },
-            icon: const Icon(
-              CupertinoIcons.textformat_size,
-              color: Colors.white,
-            ),
+            icon: const Icon(CupertinoIcons.textformat_size),
           ),
         ],
       ),
@@ -152,6 +146,7 @@ class SurhaListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Expanded(
       child: ScrollablePositionedList.builder(
         itemScrollController: itemScrollController,
@@ -200,10 +195,10 @@ class SurhaListView extends StatelessWidget {
                   child: Text(
                     "بِسْمِ اللهِ الرحْمَٰنِ الرحِيمِ",
                     textAlign: TextAlign.center,
-                    style: getTextTheme(
-                      context,
-                      fontSize.toInt(),
-                    )?.copyWith(fontFamily: 'hafs2', color: Colors.black),
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontFamily: 'hafs2',
+                      fontSize: fontSize,
+                    ),
                   ),
                 ),
               const SizedBox(height: kWidgetPadding),
@@ -215,10 +210,10 @@ class SurhaListView extends StatelessWidget {
                 child: Text(
                   e.value.$1,
                   textAlign: TextAlign.justify,
-                  style: getTextTheme(
-                    context,
-                    fontSize.toInt(),
-                  )?.copyWith(fontFamily: 'hafs2', color: Colors.black),
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontFamily: 'hafs2',
+                    fontSize: fontSize,
+                  ),
                 ),
               ),
             ],
@@ -243,6 +238,7 @@ class SurahHader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: const BoxDecoration(
@@ -253,7 +249,7 @@ class SurahHader extends StatelessWidget {
         children: [
           Text(
             "جزاء (${e.value.$2.toArabic()}) ",
-            style: getTextTheme(context, 18)?.copyWith(color: Colors.black),
+            style: theme.textTheme.titleLarge,
           ),
           const Spacer(),
           BookCard(pageNumber: currentPage.$1, isFullColor: currentPage.$2),
@@ -274,6 +270,7 @@ class BookCard extends StatelessWidget {
   final bool isFullColor;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 3),
       margin: const EdgeInsets.symmetric(vertical: 5),
@@ -283,9 +280,10 @@ class BookCard extends StatelessWidget {
       ),
       child: Text(
         pageNumber.toArabic(),
-        style: TextStyle(
-          fontSize: 16,
-          color: isFullColor ? const Color(0xfffcf9f4) : kPrimaryColor,
+        style: theme.textTheme.titleMedium?.copyWith(
+          color: isFullColor
+              ? theme.colorScheme.onPrimary
+              : theme.colorScheme.primary,
         ),
       ),
     );

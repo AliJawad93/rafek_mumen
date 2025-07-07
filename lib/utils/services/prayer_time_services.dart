@@ -255,6 +255,10 @@ class PrayerTimeService {
 
   int get getnextPrayIndex => selectedPray;
   List<PrayerTimeEndity> get getprayerTimeEndities => _prayerTimeEndities;
+
+  DateTime getNextNearestPrayTime() {
+    return _prayerTimes[selectedPray];
+  }
 }
 
 class PrayerTimeEndity {

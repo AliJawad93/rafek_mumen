@@ -1,11 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:rafek_mumen/src/home/presentation/home.dart';
-import 'package:rafek_mumen/utils/theme/app_colors.dart';
+import 'package:rafek_mumen/src/explore/presentation/pages/explore_page.dart';
+import 'package:rafek_mumen/src/home/presentation/pages/home.dart';
+import 'package:rafek_mumen/src/settings/presentation/pages/settings_page.dart';
+import 'package:rafek_mumen/src/tasbih/presentation/pages/tasbih_counter_page.dart';
 
-import '../../../utils/theme/sizes.dart';
 import '../../quran/presentation/pages/quran_page.dart';
 
 class Dashboard extends StatefulWidget {
@@ -16,7 +14,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int currentIndex = 0;
+  int selectedIndex = 0;
   late List<Widget> pages;
   bool isbill = true;
   late Color unSelectedColor;
@@ -29,73 +27,38 @@ class _DashboardState extends State<Dashboard> {
     pages = [
       const HomePage(),
       const QuranPage(),
-      // const Mustahbat(),
-      // const Compass(),
-      // const Rosary()
+      const TasbihCounterPage(),
+      const ExplorePage(),
+      const SettingsPage(),
     ];
-    unSelectedColor = Colors.grey;
-    selectedColor = kPrimaryColor;
-    backgroundColor = kSecondaryColor;
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-      child: Scaffold(
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: backgroundColor,
-              elevation: 0,
-              currentIndex: currentIndex,
-              unselectedItemColor: unSelectedColor,
-              fixedColor: selectedColor,
-              onTap: (v) {
-                setState(() {
-                  currentIndex = v;
-                });
-              },
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              selectedFontSize: 11,
-              unselectedFontSize: 11,
-              items: [
-                BottomNavigationBarItem(
-                  activeIcon: Image.asset(
-                    "assets/images/praying2.png",
-                    width: buttomNavIconSize,
-                    height: buttomNavIconSize,
-                  ),
-                  icon: SvgPicture.asset(
-                    "assets/images/praying_outline.svg",
-                    width: buttomNavIconSize,
-                    height: buttomNavIconSize,
-                  ),
-                  label: "الشاشه الرئيسيه",
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset(
-                    "assets/images/quran_outline.png",
-                    width: buttomNavIconSize - 5,
-                    height: buttomNavIconSize - 5,
-                  ),
-                  activeIcon: Image.asset(
-                    "assets/images/quran2.png",
-                    width: buttomNavIconSize - 5,
-                    height: buttomNavIconSize - 5,
-                  ),
-                  label: "القران",
-                ),
-              ],
-            ),
-          ],
-        ),
-        // body: pages[currentIndex],
-        body: IndexedStack(index: currentIndex, children: pages),
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: selectedIndex,
+        onDestinationSelected: _onItemTapped,
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home), label: 'الرئيسية'),
+          NavigationDestination(icon: Icon(Icons.menu_book), label: 'القرآن'),
+
+          NavigationDestination(
+            icon: Icon(Icons.fingerprint),
+            label: 'التسبيح',
+          ),
+          NavigationDestination(icon: Icon(Icons.explore), label: 'استكشاف'),
+
+          NavigationDestination(icon: Icon(Icons.settings), label: 'الإعدادات'),
+        ],
       ),
+      body: IndexedStack(index: selectedIndex, children: pages),
     );
   }
 }

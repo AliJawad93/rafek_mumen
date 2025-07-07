@@ -10,7 +10,7 @@ class PrayTimerController {
   late Timer _timer;
   final PrayerTimeService prayerTimeService = PrayerTimeService();
   onInitPrayerTimeService() {
-    List<double> location = LocalDatabase.getLoction()!;
+    List<double> location = LocalDatabase.getCityCoordinate()!;
     prayerTimeService.onInit(location);
     _nextNearestPrayTime.value = prayerTimeService.getNextPrayTimeInSeconds();
   }
@@ -38,6 +38,9 @@ class PrayTimerController {
 
   ValueNotifier<int> get getNextNearestPrayTimeInSeconds =>
       _nextNearestPrayTime;
+  DateTime getNextNearestPrayTime() {
+    return prayerTimeService.getNextNearestPrayTime();
+  }
   dispose() {
     _timer.cancel();
   }

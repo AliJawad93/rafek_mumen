@@ -78,10 +78,12 @@ class CitySelectorListView extends StatelessWidget {
                       String cityName = iraqCitiesCoordinates.keys.elementAt(i);
                       return ListTile(
                         onTap: () {
-                          List<double> coordinates = iraqCitiesCoordinates
-                              .values
-                              .elementAt(i);
-                          LocalDatabase.setLoction(coordinates);
+                          final coordinates = iraqCitiesCoordinates[cityName];
+
+                          LocalDatabase.setCitiesCoordinate({
+                            cityName: coordinates ?? [],
+                          });
+
                           goReplacemnt(const Dashboard());
                         },
                         title: Text(cityName, style: getTextTheme(context, 16)),

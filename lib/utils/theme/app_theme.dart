@@ -6,12 +6,19 @@ import 'package:rafek_mumen/utils/theme/sizes.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-  static ThemeData theme = ThemeData(
+  static ThemeData lightTheme = ThemeData(
     platform: Platform.isAndroid ? TargetPlatform.android : TargetPlatform.iOS,
 
     useMaterial3: true,
 
     fontFamily: 'Tajawal',
+    primaryColor: kPrimaryColor,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: kPrimaryColor,
+      primary: kPrimaryColor,
+      secondary: Colors.white,
+      brightness: Brightness.light,
+    ),
 
     // dividerColor: Colors.grey,
     // scaffoldBackgroundColor: isDarkMode
@@ -32,7 +39,22 @@ class AppTheme {
     // ),
     inputDecorationTheme: _inputDecorationTheme(),
   );
+  static ThemeData darkTheme = ThemeData(
+    platform: Platform.isAndroid ? TargetPlatform.android : TargetPlatform.iOS,
 
+    useMaterial3: true,
+
+    fontFamily: 'Tajawal',
+    primaryColor: kPrimaryColor,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: kPrimaryColor,
+      primary: kPrimaryColor,
+      secondary: Colors.white,
+      brightness: Brightness.dark,
+    ),
+
+    inputDecorationTheme: _inputDecorationTheme(),
+  );
   static _inputDecorationTheme() {
     return InputDecorationTheme(
       filled: true,

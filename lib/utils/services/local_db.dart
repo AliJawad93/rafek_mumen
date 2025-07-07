@@ -13,7 +13,8 @@ class LocalDatabase {
   }
 
   static savePrayTimesMonth(
-      Map<String, List<DateTime>> prayTimesOfMonth) async {
+    Map<String, List<DateTime>> prayTimesOfMonth,
+  ) async {
     _box.put("prayTimeMonth", prayTimesOfMonth);
   }
 
@@ -22,13 +23,19 @@ class LocalDatabase {
     return prayTimesOfMonth;
   }
 
-  static void setLoction(List<double> coordinates) {
+  static void setCitiesCoordinate(Map<String, List<double>> coordinates) {
     _box.put("location", coordinates);
   }
 
-  static List<double>? getLoction() {
+  static List<double>? getCityCoordinate() {
     var location = _box.get("location");
-    if (location == null) return null;
-    return location;
+    if (location == null || location.isEmpty) return null;
+    return location.values.first;
+  }
+
+  static String? getSelectedCityName() {
+    var location = _box.get("location");
+    if (location == null || location.isEmpty) return null;
+    return location.keys.first;
   }
 }

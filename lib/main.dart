@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rafek_mumen/colors.dart';
 import 'package:rafek_mumen/src/bottom_nav/presentation/bottom_nav_bar.dart';
 import 'package:rafek_mumen/src/home/presentation/bloc/home_bloc.dart';
 import 'package:rafek_mumen/src/quran/presentation/blocs/quran_bloc.dart';
@@ -11,8 +12,12 @@ import 'package:rafek_mumen/utils/theme/app_theme.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+class ThemeNotifier {
+  static final ValueNotifier<ThemeMode> mode = ValueNotifier(ThemeMode.light);
+}
+
 void main() async {
- WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initFunctions();
   // FlutterNativeSplash.remove();
@@ -38,32 +43,70 @@ class MyApp extends StatelessWidget {
         BlocProvider<HomeBloc>(create: (BuildContext context) => HomeBloc()),
         BlocProvider<QuranBloc>(create: (BuildContext context) => QuranBloc()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Islam',
-        supportedLocales: const [
-          Locale('ar', ''),
-          // Locale('en', ''),
-        ],
-        localizationsDelegates: const [
-          // GlobalMaterialLocalizations.delegate,
-          // GlobalCupertinoLocalizations.delegate,
-          // GlobalWidgetsLocalizations.delegate,
-        ],
-        localeResolutionCallback: (locale, supportedLocales) {
-          for (Locale supportedLocaleLanguage in supportedLocales) {
-            if (supportedLocaleLanguage.languageCode == locale!.languageCode &&
-                supportedLocaleLanguage.countryCode == locale.countryCode) {
-              return supportedLocaleLanguage;
-            }
-          }
-          return supportedLocales.first;
+      child: ValueListenableBuilder<ThemeMode>(
+        valueListenable: ThemeNotifier.mode,
+        builder: (context, currentMode, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Islam',
+            supportedLocales: const [
+              Locale('ar', ''),
+              // Locale('en', ''),
+            ],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            localeResolutionCallback: (locale, supportedLocales) {
+              for (Locale supportedLocaleLanguage in supportedLocales) {
+                if (supportedLocaleLanguage.languageCode ==
+                        locale!.languageCode &&
+                    supportedLocaleLanguage.countryCode == locale.countryCode) {
+                  return supportedLocaleLanguage;
+                }
+              }
+              return supportedLocales.first;
+            },
+
+            // builder: (context, child) {
+            //   return Overlay(
+            //     initialEntries: [
+            //       OverlayEntry(builder: (context) => child ?? const SizedBox()),
+            //       OverlayEntry(
+            //         builder: (context) => Positioned(
+            //           top: 40,
+            //           right: 16,
+            //           child: SafeArea(
+            //             child: FloatingActionButton.small(
+            //               heroTag: 'themeToggle',
+            //               tooltip: 'تبديل السمة',
+            //               child: const Icon(Icons.brightness_6),
+            //               onPressed: () {
+            //                 final isDark =
+            //                     ThemeNotifier.mode.value == ThemeMode.dark;
+            //                 ThemeNotifier.mode.value = isDark
+            //                     ? ThemeMode.light
+            //                     : ThemeMode.dark;
+            //               },
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   );
+            // },
+            navigatorKey: navigatorKey,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: currentMode,
+            home: false
+                ? ColorSchemeViewer()
+                : LocalDatabase.getCityCoordinate() == null
+                ? const CitySelectorListView()
+                : const Dashboard(),
+          );
         },
-        navigatorKey: navigatorKey,
-        theme: AppTheme.theme,
-        home: LocalDatabase.getLoction() == null
-            ? const CitySelectorListView()
-            : const Dashboard(),
       ),
     );
   }
