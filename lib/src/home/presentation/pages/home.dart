@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
       appBar: HomeAppBar(),
       body: ListView(
         padding: 16.allEdgeInsets,
+        physics: const BouncingScrollPhysics(),
         children: [
           PrayCard(prayTimerController: prayTimerController),
           HadithCarousel(),

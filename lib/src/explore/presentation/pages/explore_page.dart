@@ -11,7 +11,15 @@ class ExplorePage extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(title: const Text('استكشاف'), centerTitle: true),
+        appBar: AppBar(
+          title: Text(
+            'استكشاف',
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          centerTitle: true,
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),

@@ -1,9 +1,9 @@
 import 'dart:developer';
-import 'dart:ui';
+import 'dart:io';
 
-import 'package:flutter/material.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -38,6 +38,7 @@ class NotificationsService {
       // onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
     // _startBackgroundService();
+    await requestNotificationPermissions();
   }
 
   static createScheduleNotification({
@@ -84,6 +85,25 @@ class NotificationsService {
       );
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  static Future<void> requestNotificationPermissions() async {
+    if (Platform.isAndroid) {
+      if (await Permission.notification.isDenied) {
+        await Permission.notification.request();
+      }
+    } else if (Platform.isIOS) {
+      final iosImplementation = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
+
+      await iosImplementation?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
     }
   }
 

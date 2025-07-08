@@ -108,117 +108,108 @@ class _HadithCarouselState extends State<HadithCarousel> {
           itemBuilder: (context, index, realIndex) {
             final hadith = hadiths[index];
 
-            return Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerLowest,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: theme.shadowColor.withOpacity(0.08),
-                    blurRadius: 15,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.surface,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          '${index + 1} من ${hadiths.length}',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.primary,
+            return Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 4,
                           ),
-                        ),
-                      ),
-                      Icon(
-                        Icons.format_quote,
-                        color: theme.colorScheme.primary,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          theme.colorScheme.primary.withOpacity(0.1),
-                          theme.colorScheme.primary.withOpacity(0.05),
-                        ],
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border(
-                        right: BorderSide(
-                          color: theme.colorScheme.primary,
-                          width: 3,
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      hadith['title']!,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.primary,
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Expanded(
-                    child: Text(
-                      hadith['text']!,
-                      maxLines: 3,
-                      style: theme.textTheme.bodyMedium,
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.share, size: 18),
-                            onPressed: () {},
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.surface,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.bookmark_border,
+                          child: Text(
+                            '${index + 1} من ${hadiths.length}',
+                            style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.primary,
-                              size: 18,
                             ),
-                            onPressed: () {},
                           ),
-                        ],
+                        ),
+                        Icon(
+                          Icons.format_quote,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
                       ),
-                      Text(
-                        hadith['source']!,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            theme.colorScheme.primary.withOpacity(0.1),
+                            theme.colorScheme.primary.withOpacity(0.05),
+                          ],
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border(
+                          right: BorderSide(
+                            color: theme.colorScheme.primary,
+                            width: 3,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        hadith['title']!,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Expanded(
+                      child: Text(
+                        hadith['text']!,
+                        maxLines: 3,
                         style: theme.textTheme.bodyMedium,
+                        textAlign: TextAlign.right,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.share, size: 18),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.bookmark_border,
+                                color: theme.colorScheme.primary,
+                                size: 18,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        Text(
+                          hadith['source']!,
+                          style: theme.textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },

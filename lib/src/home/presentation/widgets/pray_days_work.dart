@@ -108,105 +108,87 @@ class _DailyPrayersWidgetState extends State<DailyPrayersWidget> {
   Widget _buildPrayerCard(PrayWork prayer, int index, ThemeData theme) {
     final colorScheme = theme.colorScheme;
 
-    return InkWell(
-      onTap: () {
-        go(PrayDayWorkPage(prayWork: prayer));
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerLowest,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: theme.shadowColor.withOpacity(0.02),
-              blurRadius: 12,
-              offset: const Offset(0, 3),
+    return Card(
+      child: InkWell(
+        onTap: () {
+          go(PrayDayWorkPage(prayWork: prayer));
+        },
+        child: ListTile(
+          leading: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
-        ),
-        child: Theme(
-          data: theme.copyWith(dividerColor: Colors.transparent),
-          child: ListTile(
-            leading: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: colorScheme.surface,
-                borderRadius: BorderRadius.circular(12),
+            child: Center(
+              child: Image.asset(
+                "assets/images/pray.png",
+                width: 26,
+                height: 26,
+                color: colorScheme.primary,
               ),
-              child: Center(
-                child: Image.asset(
-                  "assets/images/pray.png",
-                  width: 26,
-                  height: 26,
-                  color: colorScheme.primary,
+            ),
+          ),
+          title: Text(
+            prayer.title,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onSurface,
+            ),
+            textAlign: TextAlign.right,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHighest.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border(
+                    right: BorderSide(color: colorScheme.primary, width: 4),
+                  ),
                 ),
-              ),
-            ),
-            title: Text(
-              prayer.title,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.onSurface,
-              ),
-              textAlign: TextAlign.right,
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHighest.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border(
-                      right: BorderSide(color: colorScheme.primary, width: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      prayer.description,
+                      maxLines: 2,
+                      textAlign: TextAlign.right,
+                      style: theme.textTheme.bodySmall,
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        prayer.description,
-                        maxLines: 2,
-                        textAlign: TextAlign.right,
-                        style: theme.textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.surface,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.menu_book,
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.menu_book, color: colorScheme.primary, size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      prayer.source,
+                      style: theme.textTheme.labelSmall?.copyWith(
                         color: colorScheme.primary,
-                        size: 16,
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        prayer.source,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: colorScheme.primary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

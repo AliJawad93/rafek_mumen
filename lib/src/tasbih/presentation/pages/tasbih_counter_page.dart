@@ -32,9 +32,7 @@ class _TasbihCounterPageState extends State<TasbihCounterPage> {
         title: Text(
           'عداد التسبيح',
           style: theme.textTheme.headlineSmall?.copyWith(
-            color: colorScheme.onSurface,
             fontWeight: FontWeight.w600,
-            letterSpacing: 0.1,
           ),
         ),
       ),
@@ -124,7 +122,6 @@ class _TasbihCounterPageState extends State<TasbihCounterPage> {
 
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _reset,
-
         icon: Icon(Icons.refresh),
         label: Text('اعادة التسبيح'),
       ),

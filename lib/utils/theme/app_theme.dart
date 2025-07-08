@@ -1,79 +1,58 @@
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rafek_mumen/utils/theme/sizes.dart';
 
 import 'app_colors.dart';
 
 class AppTheme {
-  static ThemeData lightTheme = ThemeData(
-    platform: Platform.isAndroid ? TargetPlatform.android : TargetPlatform.iOS,
+  static final _platform = defaultTargetPlatform;
 
-    useMaterial3: true,
-
-    fontFamily: 'Tajawal',
-    primaryColor: kPrimaryColor,
-    colorScheme: ColorScheme.fromSeed(
+  static ThemeData get lightTheme {
+    final colorScheme = ColorScheme.fromSeed(
       seedColor: kPrimaryColor,
       primary: kPrimaryColor,
       secondary: Colors.white,
       brightness: Brightness.light,
-    ),
+    );
 
-    // dividerColor: Colors.grey,
-    // scaffoldBackgroundColor: isDarkMode
-    //     ? CupertinoColors.darkBackgroundGray
-    //     : Colors.white,
-    // secondaryHeaderColor: Colors.grey,
-    // shadowColor: Colors.black,
-    // splashColor: Colors.transparent,
-    // unselectedWidgetColor: Colors.grey,
+    return ThemeData(
+      useMaterial3: true,
+      platform: _platform,
+      fontFamily: 'Tajawal',
+      primaryColor: kPrimaryColor,
+      colorScheme: colorScheme,
+      cardTheme: _cardTheme(colorScheme),
+    );
+  }
 
-    // appBarTheme: const AppBarTheme(
-    //   elevation: 0,
-    //   backgroundColor: kPrimaryColor,
-    // ),
-    // cardTheme: CardThemeData(
-    //   color: const Color(0xFF141415),
-    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    // ),
-    inputDecorationTheme: _inputDecorationTheme(),
-  );
-  static ThemeData darkTheme = ThemeData(
-    platform: Platform.isAndroid ? TargetPlatform.android : TargetPlatform.iOS,
-
-    useMaterial3: true,
-
-    fontFamily: 'Tajawal',
-    primaryColor: kPrimaryColor,
-    colorScheme: ColorScheme.fromSeed(
+  static ThemeData get darkTheme {
+    final colorScheme = ColorScheme.fromSeed(
       seedColor: kPrimaryColor,
       primary: kPrimaryColor,
       secondary: Colors.white,
       brightness: Brightness.dark,
-    ),
+    );
 
-    inputDecorationTheme: _inputDecorationTheme(),
-  );
-  static _inputDecorationTheme() {
-    return InputDecorationTheme(
-      filled: true,
-      fillColor: kSecondaryColor,
-      focusColor: kSecondaryColor,
-      prefixIconColor: Colors.red,
-      suffixIconColor: Colors.red,
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(kRadius),
-        borderSide: const BorderSide(color: kPrimaryColor),
-        // borderRadius: BorderRadius.circular(5),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(kRadius),
+    return ThemeData(
+      useMaterial3: true,
+      platform: _platform,
+      fontFamily: 'Tajawal',
+      primaryColor: kPrimaryColor,
+      colorScheme: colorScheme,
+      cardTheme: _cardTheme(colorScheme),
+    );
+  }
 
-        borderSide: const BorderSide(color: Colors.grey),
-        //borderRadius: BorderRadius.circular(5),
+  static CardThemeData _cardTheme(ColorScheme colorScheme) {
+    return CardThemeData(
+      elevation: 0,
+      color: colorScheme.surfaceContainerLowest,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: colorScheme.outlineVariant.withOpacity(0.5),
+          width: 0,
+        ),
       ),
-      hintStyle: const TextStyle(color: Colors.grey),
     );
   }
 }
