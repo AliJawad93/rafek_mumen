@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rafek_mumen/main.dart';
+import 'package:rafek_mumen/utils/services/gerneral_service.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -167,10 +168,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         icon: const Icon(Icons.share),
                         label: const Text('مشاركة التطبيق'),
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('تم نسخ رابط المشاركة!'),
-                            ),
+                          GeneralService.shareText(
+                            'تطبيق إسلامي رائع! جربه الآن: https://rafekmumen.app',
+                            subject: 'شارك تطبيق إسلامي',
                           );
                         },
                       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rafek_mumen/src/home/data/models/pray_day_work_model.dart';
+import 'package:rafek_mumen/utils/services/gerneral_service.dart';
 import 'package:rafek_mumen/utils/theme/sizes.dart';
 
 import '../../../../utils/theme/app_colors.dart';
@@ -145,26 +145,6 @@ class _PrayDayWorkPageState extends State<PrayDayWorkPage>
     _particleAnimationController.dispose();
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _shareText() {
-    // Implementation for sharing
-  }
-
-  void _copyText() {
-    Clipboard.setData(ClipboardData(text: widget.prayWork.description));
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('تم نسخ النص'),
-        backgroundColor: kPrimaryColor,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-    );
-  }
-
-  void _bookmarkText() {
-    // Implementation for bookmarking
   }
 
   @override
@@ -520,20 +500,17 @@ class _PrayDayWorkPageState extends State<PrayDayWorkPage>
                   spacing: 12,
                   children: [
                     Expanded(
-                      child: _buildActionButton(
-                        Icons.copy,
-                        "نسخ",
-                        _copyText,
-                        theme,
-                      ),
+                      child: _buildActionButton(Icons.copy, "نسخ", () {
+                        GeneralService.copyText(widget.prayWork.description);
+                      }, theme),
                     ),
                     Expanded(
-                      child: _buildActionButton(
-                        Icons.share,
-                        "مشاركة",
-                        _shareText,
-                        theme,
-                      ),
+                      child: _buildActionButton(Icons.share, "مشاركة", () {
+                        GeneralService.shareText(
+                          widget.prayWork.description,
+                          subject: widget.prayWork.title,
+                        );
+                      }, theme),
                     ),
                   ],
                 ),

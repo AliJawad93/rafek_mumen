@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 // import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -38,7 +37,6 @@ class NotificationsService {
       // onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
     // _startBackgroundService();
-    await requestNotificationPermissions();
   }
 
   static createScheduleNotification({
@@ -89,22 +87,28 @@ class NotificationsService {
   }
 
   static Future<void> requestNotificationPermissions() async {
-    if (Platform.isAndroid) {
-      if (await Permission.notification.isDenied) {
-        await Permission.notification.request();
-      }
-    } else if (Platform.isIOS) {
-      final iosImplementation = _flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin
-          >();
+    await Permission.notification.request();
 
-      await iosImplementation?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-    }
+    // try {
+    //   if (Platform.isAndroid) {
+    //     await Permission.notification.request();
+    //   } else if (Platform.isIOS) {
+    //     final iosImplementation = _flutterLocalNotificationsPlugin
+    //         .resolvePlatformSpecificImplementation<
+    //           IOSFlutterLocalNotificationsPlugin
+    //         >();
+
+    //     await iosImplementation?.requestPermissions(
+    //       alert: true,
+    //       badge: true,
+    //       sound: true,
+    //     );
+    //   }
+    // } catch (e) {
+    //   log(
+    //     "Error requesting notification permissions < requestNotificationPermissions >: $e",
+    //   );
+    // }
   }
 
   static _notificationDetails() {

@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:rafek_mumen/utils/services/gerneral_service.dart';
 
 class HadithCarousel extends StatefulWidget {
   const HadithCarousel({super.key});
@@ -186,22 +187,13 @@ class _HadithCarouselState extends State<HadithCarousel> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.share, size: 18),
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.bookmark_border,
-                                color: theme.colorScheme.primary,
-                                size: 18,
-                              ),
-                              onPressed: () {},
-                            ),
-                          ],
+                        IconButton(
+                          icon: const Icon(Icons.share, size: 18),
+                          onPressed: () {
+                            GeneralService.shareText(hadith['text']!);
+                          },
                         ),
+
                         Text(
                           hadith['source']!,
                           style: theme.textTheme.bodyMedium,

@@ -30,6 +30,7 @@ initFunctions() async {
     NotificationsService.init(),
     Future.delayed(const Duration(seconds: 2)),
   ]);
+  NotificationsService.requestNotificationPermissions();
 }
 
 class MyApp extends StatelessWidget {
